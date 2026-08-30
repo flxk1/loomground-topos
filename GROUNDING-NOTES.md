@@ -6,11 +6,10 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # Grounding notes — Loomground Topos (legal-system topology grammar)
 
-**STATUS: PROPOSED, pending ratification by the loomground owner and Felix.**
-**Nothing in this design has been landed, staged, committed, or pushed in any
-loomground repository. It lives only under `Projects/legal-topology-grammar/`
-(local, no remote, no `git init`).** No other session's repo was edited; all
-loomground reads were read-only.
+**STATUS: RATIFIED (v0.1), published as [`loomground-topos`](https://github.com/flxk1/loomground-topos).**
+All loomground reads during authoring were read-only; no other plane was edited. The
+per-jurisdiction *grounded* instances that consume this grammar stay local (the moat);
+this repository is the grammar — the invariants — only.
 
 ---
 
@@ -155,10 +154,9 @@ are classical maxims of legal method, not statutory provisions.
 
 ## 4. Open questions for the loomground owner + Felix
 
-1. **Is this a new sibling repo (`loomground-topology` / `loomground-topos`) or a
-   companion inside `loomground-governance/standard/companions/`?** The
-   claim-axes precedent suggests companion; the plane-parity with deontic/versum
-   suggests a standalone pack. Naming (`Topos`?) is unratified.
+1. **Sibling repo vs companion — RESOLVED.** Placed as the standalone Loomground-plane
+   repo `loomground-topos` (plane-parity with deontic/versum, over the claim-axes
+   companion precedent), per `PLACEMENT.md`.
 2. **URN scheme for topology nodes.** I proposed `urn:topo:<system>:<class>:<id>`
    alongside the legal-source `urn:dls:<scheme>:<id>`. Does the family want a
    single namespace registry entry, and which version tag (`urn:loomground:topos:0.1:…`)?
@@ -210,5 +208,7 @@ legal-topology-grammar/
 └── GROUNDING-NOTES.md         this file
 ```
 
-Everything here is **PROPOSED**. Ratification, repo placement, naming, and any
-landing in loomground are reserved to the loomground owner and Felix.
+This grammar is **ratified and published** as `loomground-topos` (a standalone
+Loomground-plane repo). The §4 questions that remain open after ratification — the URN
+scheme, the rank-ladder projection direction, and the interval temporal axis — stay
+with the loomground owner and Felix.

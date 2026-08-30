@@ -4,8 +4,7 @@ SPDX-FileCopyrightText: 2026 flxk1
 SPDX-License-Identifier: CC-BY-4.0
 -->
 <!-- Copyright 2026 flxk1 -->
-<!-- STATUS: PROPOSED — pending ratification by the loomground owner and Felix. -->
-<!-- Nothing in this specification has been landed in any loomground repository. -->
+<!-- STATUS: RATIFIED (v0.1) — published as loomground-topos. -->
 
 # Loomground Topos — the legal-system topology grammar
 
@@ -14,11 +13,11 @@ holds which power, at which level, through which instruments, over which
 subject matter, and how those powers check one another — flexible enough to
 carry any legal system and the couplings between systems.
 
-> **Status: PROPOSED (v0.1, draft).** This is a spec-only design staged locally
-> for ratification. It lands nothing in loomground and edits no other plane.
-> Where the design depends on an unratified loomground change (notably the
-> temporal-interval axis), that dependency is called out inline and again in
-> `GROUNDING-NOTES.md`.
+> **Status: ratified, v0.1.** Published as the standalone Loomground-plane grammar
+> [`loomground-topos`](https://github.com/flxk1/loomground-topos). Where the design
+> depends on a not-yet-sequenced loomground change (the temporal-interval axis, and the
+> `law_eu` / mrl rank-ladder projection), that dependency is called out inline and again
+> in `GROUNDING-NOTES.md`.
 
 ---
 

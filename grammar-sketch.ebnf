@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  *)
 (* SPDX-FileCopyrightText: 2026 flxk1 *)
-(* STATUS: PROPOSED — pending ratification. Nothing landed in loomground.      *)
+(* STATUS: RATIFIED (v0.1) — published as loomground-topos.                    *)
 (*                                                                             *)
 (* Loomground Topos — the legal-system topology grammar, concrete textual      *)
 (* surface (the .lt netlist), sketch v0.1. ISO/IEC 14977 EBNF.                 *)
