@@ -1,0 +1,179 @@
+(*
+ * SPDX-FileCopyrightText: 2026 flxk1
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *)
+(* SPDX-FileCopyrightText: 2026 flxk1 *)
+(* STATUS: PROPOSED — pending ratification. Nothing landed in loomground.      *)
+(*                                                                             *)
+(* Loomground Topos — the legal-system topology grammar, concrete textual      *)
+(* surface (the .lt netlist), sketch v0.1. ISO/IEC 14977 EBNF.                 *)
+(*                                                                             *)
+(* CHOICE OF SURFACE. The loomground family ships BOTH a concrete EBNF netlist *)
+(* (loomground.ebnf) AND an abstract JSON graph (patch.schema.json); the       *)
+(* netlist is authored, the JSON is the interchange/emission target. This      *)
+(* grammar mirrors that dual. This file is the EBNF netlist (chosen as the     *)
+(* primary human-authored surface, to match the family); the abstract-graph    *)
+(* JSON schema sketch is appended at the end of this file as the interchange   *)
+(* form. Reason for keeping EBNF primary: a legal order is authored by hand as *)
+(* a small set of node + relation lines, and the family's readers already know *)
+(* the netlist idiom from loomground.ebnf. Reason for ALSO giving the JSON:    *)
+(* the topology graph is a data artifact other planes (versum, deontic) point  *)
+(* INTO by node id (§8), and a JSON graph is the natural hand-off form.        *)
+(*                                                                             *)
+(* Parse-vs-apply split (as in loomground.ebnf): any `id` parses; membership   *)
+(* in a ladder/catalogue and every §10 well-formedness invariant are checked   *)
+(* at APPLY, not here.                                                         *)
+
+program      = { line } ;
+line         = [ statement ] , [ comment ] , newline ;
+statement    = system decl | organ decl | level decl
+             | instrument decl | competence decl
+             | relation | assertion ;
+
+(* --- nodes (SPEC §2) --- *)
+
+system decl      = "system" , id ,
+                   { "tradition" , id
+                   | "powers" , catalogue-ref
+                   | "levels" , ladder-ref
+                   | "ranks" , ladder-ref } ;
+
+organ decl       = "organ" , id ,
+                   { "system" , id
+                   | "level" , id
+                   | "powers" , label set
+                   | "party" , id } ;
+
+level decl       = "level" , id ,
+                   { "system" , id
+                   | "rank" , number
+                   | "contains" , id } ;   (* territorial ladder position + the stratum below *)
+   (* KEYWORD NOTE: `rank` here sets level_rank (the TERRITORIAL axis); `rank`   *)
+   (* under an instrument decl sets the NORMATIVE rank. Two distinct abstract    *)
+   (* fields (SPEC §2); the enclosing node class disambiguates the shared surface*)
+   (* keyword. They are never merged.                                           *)
+
+instrument decl  = "instrument" , id ,
+                   { "system" , id
+                   | "rank" , rank-value
+                   | "origin" , id                      (* origin_organ *)
+                   | "direct-effect" , effect-value
+                   | "directly-applicable" } ;
+
+competence decl  = "competence" , id ,
+                   { "system" , id
+                   | "allocation" , id                  (* value of the system's allocation vocab *)
+                   | "holder" , id } ;
+
+(* --- relations (SPEC §3-§4): a typed, directed edge with optional props --- *)
+
+relation     = "rel" , endpoint , relation-type , endpoint , [ prop block ] ;
+relation-type = vertical-rel | horizontal-rel | coupling-rel ;
+
+vertical-rel   = "outranks" | "derives-authority-from"
+               | "level-contains" | "has-primacy-over" ;
+horizontal-rel = "co-equal-with" | "reviews" | "can-veto" | "can-override"
+               | "appoints" | "dissolves" | "may-refer-to" | "must-refer-to" ;
+coupling-rel   = "has-primacy-over" | "applies-directly-in"
+               | "must-be-transposed-by" | "confers-competence"
+               | "has-direct-effect" | "may-refer-to" | "must-refer-to" ;
+   (* coupling vs vertical/horizontal is not a grammar distinction: an edge is  *)
+   (* coupling iff its two endpoints resolve to DIFFERENT systems (checked at   *)
+   (* apply, §10.4). has-primacy-over and may/must-refer-to appear in both      *)
+   (* lists on purpose — the same relation serves intra- and inter-order.       *)
+
+(* --- assertion wrapper (SPEC §4.7): a relation CLAIMED by a named organ ---   *)
+(* A settled `rel` is sugar for a single uncontested assertion by the order's   *)
+(* own competent organ; two opposite assertions with different claimants over   *)
+(* the same triple = a contested edge, which the language represents, never     *)
+(* resolves.                                                                    *)
+
+assertion    = "assert" , id , ":" , [ "NOT" ] ,
+               endpoint , relation-type , endpoint , [ prop block ] ;
+
+(* --- relation / assertion properties --- *)
+
+prop block   = "[" , prop , { "," , prop } , "]" ;
+prop         = prop-key , "=" , prop-value ;
+prop-key     = "resolution_mode" | "state" | "deadline"
+             | "status" | "basis" | id ;
+prop-value   = id | resolution-mode | trans-state | assert-status
+             | date | text-value ;
+
+resolution-mode = "disapply" | "invalidate" | "void" ;     (* SPEC §4.1; language-owned *)
+trans-state     = "pending" | "transposed" | "gap" | "partial" ;  (* SPEC §4.3 *)
+assert-status   = "asserted" | "contested" ;               (* SPEC §4.7 *)
+effect-value    = "none" | "vertical" | "horizontal" ;     (* SPEC §4.5 *)
+
+(* --- shared terminals --- *)
+
+endpoint     = id ;                       (* a declared node id, or system#part *)
+label set    = label | "{" , label , { "," , label } , "}" ;
+label        = id ;
+catalogue-ref = id ;                      (* names a power_catalogue.json profile *)
+ladder-ref   = id ;                       (* names a level_ladder / rank_ladder profile *)
+rank-value   = number | "null" ;          (* null = not-yet-grounded (SPEC §5.3), NOT rank 0 *)
+date         = number , "-" , number , "-" , number ;   (* point precision; interval axis pending *)
+text-value   = '"' , { ? any char except '"' ? } , '"' ;
+id           = letter , { letter | digit | "-" | "_" | ":" | "#" } ;
+   (* ":" and "#" admitted so instrument-classes (regulation:eu) and           *)
+   (* system-part refs (eu#instruments) are single ids, matching the versum     *)
+   (* INSTRUMENT_RANK key style; still one lexical id.                          *)
+number       = digit , { digit } ;
+comment      = "#" , { ? any character except newline ? } ;
+letter       = "A" .. "Z" | "a" .. "z" ;
+digit        = "0" .. "9" ;
+
+(* ========================================================================== *)
+(* APPENDIX — abstract-graph JSON schema sketch (interchange form).            *)
+(* Mirrors patch.schema.json: the netlist above is authored; this is the       *)
+(* canonical data an emitter produces and other planes point into. Sketch only.*)
+(*                                                                             *)
+(* {                                                                           *)
+(*   "$id": "urn:loomground:topos:0.1:graph",                                  *)
+(*   "type": "object",                                                         *)
+(*   "required": ["systems", "nodes", "relations"],                            *)
+(*   "properties": {                                                           *)
+(*     "systems":  { "type": "array", "items": {                              *)
+(*        "required": ["id"],                                                  *)
+(*        "properties": { "id": {"type":"string"},                            *)
+(*          "tradition": {"enum":["civil","common","customary","religious","hybrid"]},*)
+(*          "power_catalogue": {"type":"string"},                              *)
+(*          "level_ladder": {"type":"string"},                                 *)
+(*          "rank_ladder": {"type":"string"} } } },                            *)
+(*     "nodes":    { "type": "array", "items": {                              *)
+(*        "required": ["id", "class", "system"],                               *)
+(*        "properties": {                                                      *)
+(*          "id": {"type":"string"},                                           *)
+(*          "class": {"enum":["organ","level","instrument","competence"]},     *)
+(*          "system": {"type":"string"},                                       *)
+(*          "level": {"type":"string"},                                        *)
+(*          "level_rank": {"type":["integer","null"]},                         *)
+(*          "contains": {"type":"string"},                                     *)
+(*          "powers": {"type":"array","items":{"type":"string"}},              *)
+(*          "rank": {"type":["integer","null"]},   (* null = not-yet-grounded *)*)
+(*          "origin_organ": {"type":"string"},                                 *)
+(*          "direct_effect": {"enum":["none","vertical","horizontal"]},        *)
+(*          "directly_applicable": {"type":"boolean"},                         *)
+(*          "allocation": {"type":"string"},                                   *)
+(*          "holder": {"type":"string"} } } },                                 *)
+(*     "relations": { "type": "array", "items": {                             *)
+(*        "required": ["from","to","type"],                                    *)
+(*        "properties": {                                                      *)
+(*          "from": {"type":"string"}, "to": {"type":"string"},               *)
+(*          "type": {"enum":["outranks","derives-authority-from",             *)
+(*             "level-contains","has-primacy-over","co-equal-with","reviews",  *)
+(*             "can-veto","can-override","appoints","dissolves",               *)
+(*             "may-refer-to","must-refer-to","applies-directly-in",           *)
+(*             "must-be-transposed-by","confers-competence","has-direct-effect"]},*)
+(*          "resolution_mode": {"enum":["disapply","invalidate","void"]},      *)
+(*          "state": {"enum":["pending","transposed","gap","partial"]},        *)
+(*          "deadline": {"type":"string"},   (* point precision, §8.1 *)       *)
+(*          "basis": {"type":"string"},                                        *)
+(*          "asserted_by": {"type":"string"},   (* claimant organ id, §4.7 *)  *)
+(*          "polarity": {"enum":["affirm","deny"]},                            *)
+(*          "status": {"enum":["asserted","contested"]} } } }                  *)
+(*   }                                                                         *)
+(* }                                                                           *)
+(* ========================================================================== *)

@@ -1,0 +1,13 @@
+# Operational / staging notes — stay local, never published.
+# (Published repos are clean artifacts for readers, not working repos.)
+PLACEMENT.md
+RATIFICATION.md
+
+# Build / OS cruft
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+# iCloud filename twins
+* 2.*
+* 2/
