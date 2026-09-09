@@ -5,7 +5,7 @@ SPDX-PackageSupplier = "Organization: Loomground Contributors"
 # License + copyright for files that cannot carry an inline SPDX header: NOTICE is
 # plain text and .gitignore is config. Everything else declares SPDX headers inline.
 [[annotations]]
-path = [".gitignore", "NOTICE"]
+path = [".gitignore", "NOTICE", "CHANGELOG.md"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 flxk1"
 SPDX-License-Identifier = "Apache-2.0"

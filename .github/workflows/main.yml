@@ -1,0 +1,73 @@
+# SPDX-FileCopyrightText: 2026 flxk1
+# SPDX-License-Identifier: Apache-2.0
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  parse-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Parse the .lt blocks in examples/
+        shell: python
+        run: |
+          import re, sys
+          from pathlib import Path
+          DECL = {"system", "organ", "level", "instrument", "competence"}
+          REL = {"outranks", "derives-authority-from", "level-contains", "has-primacy-over",
+                 "co-equal-with", "reviews", "can-veto", "can-override", "appoints", "dissolves",
+                 "may-refer-to", "must-refer-to", "applies-directly-in", "must-be-transposed-by",
+                 "confers-competence", "has-direct-effect"}
+          ID = re.compile(r"^[A-Za-z][A-Za-z0-9_:#-]*$")
+          fence = re.compile(r"```lt\n(.*?)```", re.S)
+          def strip_comment(line):
+              out, q = [], False
+              for ch in line:
+                  if ch == '"': q = not q
+                  if ch == "#" and not q and (not out or out[-1] in " \t"):
+                      break
+                  out.append(ch)
+              return "".join(out)
+          def statements(text):
+              cur = ""
+              for raw in text.splitlines():
+                  line = strip_comment(raw).rstrip()
+                  if not line.strip():
+                      continue
+                  if line.startswith((" ", "\t")) and cur:
+                      cur += " " + line.strip()
+                  else:
+                      if cur: yield cur
+                      cur = line.strip()
+              if cur: yield cur
+          def check(stmt):
+              head = re.sub(r"\[.*\]\s*$", "", stmt).split()
+              kw = head[0]
+              if kw in DECL:
+                  assert len(head) >= 2 and ID.match(head[1]), stmt
+              elif kw == "rel":
+                  assert len(head) == 4 and ID.match(head[1]) and head[2] in REL and ID.match(head[3]), stmt
+              elif kw == "assert":
+                  m = re.match(r"assert\s+(\S+)\s*:\s*(NOT\s+)?(\S+)\s+(\S+)\s+(\S+)$", " ".join(head))
+                  assert m and ID.match(m.group(1)) and m.group(4) in REL, stmt
+              else:
+                  raise AssertionError(stmt)
+          total = errors = 0
+          for p in sorted(Path("examples").glob("*.md")):
+              n = 0
+              for m in fence.finditer(p.read_text(encoding="utf-8")):
+                  for stmt in statements(m.group(1)):
+                      n += 1
+                      try: check(stmt)
+                      except AssertionError as e:
+                          errors += 1; print(f"FAIL {p}: {e}")
+              total += n
+              print(f"parsed {p}: {n} statements")
+          print(f"{total} statements, {errors} errors")
+          sys.exit(1 if errors else 0)

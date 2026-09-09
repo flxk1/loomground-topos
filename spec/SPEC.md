@@ -185,7 +185,7 @@ exists) is *queried*, never stored (§6), mirroring governance's
 Unlike the powers, levels, ranks, and allocation vocabularies — which are
 **data**, parameterised per system (§7), and the basis of the "any legal system"
 claim for those axes — the **relation types are a fixed enum** (the
-`vertical-rel`/`horizontal-rel`/`coupling-rel` lists in `grammar-sketch.ebnf`).
+`vertical-rel`/`horizontal-rel`/`coupling-rel` lists in `grammar/topos.ebnf`).
 The "any legal system" claim is therefore **bounded for relation *types* the enum
 does not name.** A legal relation with no dedicated relation type is representable
 only *implicitly*, as the **presence, direction, and `basis` of an edge** drawn
@@ -353,7 +353,7 @@ assert de:bverfg : NOT eu:primary-law has-primacy-over de:grundgesetz
 
 The `NOT` scopes the whole triple by position; the assertion surface defines no
 parenthesis terminal (`assert id ":" [NOT] endpoint relation-type endpoint`,
-grammar-sketch), so the negation is written **without parentheses**.
+`grammar/topos.ebnf`), so the negation is written **without parentheses**.
 
 **Two well-formed shapes of a contested edge:**
 
@@ -660,7 +660,7 @@ Mirroring governance's `well_formedness` list:
 
 ---
 
-*See `grammar-sketch.ebnf` for the concrete surface and the abstract-graph JSON
+*See `grammar/topos.ebnf` for the concrete surface and the abstract-graph JSON
 schema; `examples/` for the four instantiations; `GROUNDING-NOTES.md` for exactly
 what was read, which doctrines were relied on, and the open questions for the
 loomground owner and Felix.*

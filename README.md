@@ -26,8 +26,8 @@ them). It is **consume-only**: downstream consumers read it; none owns it.
 
 | File | Role |
 |---|---|
-| [`SPEC.md`](SPEC.md) | the language definition — model, neutrality principles, conflict-resolution precedence, inter-system coupling, the contested-relation mechanism, and the plane seams |
-| [`grammar-sketch.ebnf`](grammar-sketch.ebnf) | the `.lt` netlist grammar (EBNF, in the loomground family idiom) plus an abstract-graph JSON interchange |
+| [`spec/SPEC.md`](spec/SPEC.md) | the language definition — model, neutrality principles, conflict-resolution precedence, inter-system coupling, the contested-relation mechanism, and the plane seams |
+| [`grammar/topos.ebnf`](grammar/topos.ebnf) | the `.lt` netlist grammar (EBNF, in the loomground family idiom) plus an abstract-graph JSON interchange |
 | [`examples/`](examples) | worked instantiations — the EU order, Germany, the EU↔Germany coupling, and the UK (common-law proof) — each a concrete node/edge listing |
 | [`GROUNDING-NOTES.md`](GROUNDING-NOTES.md) | grounding provenance: what was read, the legal doctrines cited, and the honest open questions and caveats |
 
@@ -61,5 +61,5 @@ relations (accession, reservation, denunciation) are carried only implicitly.
 ## Licence
 
 Dual, following the Loomground family: the language-definition prose (`README.md`,
-`SPEC.md`) is CC-BY-4.0; the grammar, worked examples, grounding notes, and repository
+`spec/SPEC.md`) is CC-BY-4.0; the grammar, worked examples, grounding notes, and repository
 files are Apache-2.0. See [`LICENSES/`](LICENSES) and [`NOTICE`](NOTICE).
