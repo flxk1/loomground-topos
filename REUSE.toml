@@ -9,3 +9,11 @@ path = [".gitignore", "NOTICE", "CHANGELOG.md"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 flxk1"
 SPDX-License-Identifier = "Apache-2.0"
+
+# README.md is language-definition prose (CC-BY-4.0); its header is kept out of the file
+# so the text budget is the README's own words.
+[[annotations]]
+path = ["README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 flxk1"
+SPDX-License-Identifier = "CC-BY-4.0"
