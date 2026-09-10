@@ -1,0 +1,28 @@
+{
+  "name": "loomground-topos",
+  "version": "0.1.0",
+  "description": "lt, the legal-system topology language: systems, levels, organs, instruments, competences and their relations, with assertions by named organs. The topos skill is the language card; the loomground MCP server carries topos_parse.",
+  "author": {
+    "name": "Loomground Contributors"
+  },
+  "keywords": [
+    "loomground",
+    "topos",
+    "legal-topology",
+    "authority",
+    "hierarchy",
+    "competence",
+    "language"
+  ],
+  "skills": "./skills/",
+  "mcpServers": {
+    "loomground": {
+      "command": "loomground-mcp",
+      "args": [
+        "serve",
+        "--transport",
+        "stdio"
+      ]
+    }
+  }
+}

@@ -17,3 +17,17 @@ path = ["README.md"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 flxk1"
 SPDX-License-Identifier = "CC-BY-4.0"
+
+# The universal skill is the language card (prose, CC-BY-4.0 like docs/language-card.md);
+# its YAML frontmatter admits no comment header. The plugin manifest is JSON (no comment syntax).
+[[annotations]]
+path = ["skills/topos/SKILL.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 flxk1"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = [".claude-plugin/plugin.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 flxk1"
+SPDX-License-Identifier = "Apache-2.0"
