@@ -1,0 +1,26 @@
+# loomground-topos
+
+> Experimental: legal-system topology language for the Loomground family — authority, hierarchy, competence, inter-system relations.
+
+## Problem
+Which source outranks which is a lookup table per project. A language for authority, hierarchy and competence between legal systems. Experimental.
+
+## Read
+[`spec/SPEC.md`](spec/SPEC.md) · [`grammar/topos.ebnf`](grammar/topos.ebnf) · [`examples/`](examples)
+
+## Usage
+```lt
+organ de:bverfg  system de  level de:federal  powers {judicial}
+```
+Every `.lt` block under `examples/` is parsed by the CI job in `.github/workflows/main.yml`.
+
+## Contracts
+Nodes: `system`, `organ`, `level`, `instrument`, `competence`. Edges: 16 relations; `assert` carries contested relations.
+
+## Family
+Legal-system topology language (authority, hierarchy, competence, inter-system relations). Experimental. Peer of loomground-deontic. Consumed by loomground-versum profiles.
+
+Language: loomground — guide https://github.com/flxk1/loomground/blob/main/llms.txt (the .lg language an agent reads, emits, validates); catalogue https://github.com/flxk1/loomground/blob/main/CATALOGUE.json
+Language card: docs/language-card.md
+Skills: topos
+MCP tools: topos_parse
