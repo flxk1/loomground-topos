@@ -179,7 +179,7 @@ are classical maxims of legal method, not statutory provisions.
 7. **Case-law / soft-law grounding.** The model treats ungrounded source-classes
    as not-yet-grounded (§5.3). Confirm this is the desired failure mode for a
    `policy-compliance` gate (fail-closed / quarantine, never permissive) — it
-   matches the RVND posture but should be ratified for this plane.
+   matches the conservative host posture but should be ratified for this plane.
 8. **Closed relation enum (§3.5).** Relation *types* are a fixed enum (unlike the
    data-parameterised powers/levels/ranks/allocation), so treaty consent,
    accession, reservation, and withdrawal are representable only implicitly
