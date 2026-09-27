@@ -46,7 +46,7 @@ v0.1 · 4 examples · CI parses every `.lt` block · [`GROUNDING-NOTES.md`](GROU
 
 ## How this is made
 
-The code and documentation are written with Loomground agents running on Claude (Anthropic). The maintainer reads and corrects all of it.
+The code and documentation are written with Loomground agents. The maintainer reads and corrects all of it.
 
 ## License
 CC-BY-4.0 (spec, README) · Apache-2.0 (grammar, examples) — `LICENSES/`, `NOTICE`.

@@ -11,6 +11,6 @@ The grammar, worked examples, grounding notes, and repository files are licensed
 under the Apache License, Version 2.0 (see LICENSES/Apache-2.0.txt).
 
 Authorship: the project's human author(s) hold the copyright. The code and
-documentation are written with Loomground agents running on Claude (Anthropic).
+documentation are written with Loomground agents.
 The maintainer reads and corrects all of it. An AI system is a tool: it is not
 an author or a contributor, holds no copyright and makes no copyright claim.
