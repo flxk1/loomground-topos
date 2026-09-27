@@ -15,10 +15,12 @@ Every `.lt` block under `examples/` is parsed by the CI job in `.github/workflow
 
 ## Example
 ```
-in : organ de:bverfg  system de  level de:federal  powers {judicial}
-     rel   eu:regulation  has-primacy-over  de:formal-statute
-out: parsed examples/readme.md: 2 statements
-     2 statements, 0 errors
+in : every lt block in examples/*.md (CI parse step)
+out: parsed examples/de.md: 31 statements
+     parsed examples/eu-de-coupling.md: 15 statements
+     parsed examples/eu.md: 33 statements
+     parsed examples/uk.md: 15 statements
+     94 statements, 0 errors
 ```
 
 ## Language
@@ -41,6 +43,10 @@ Legal-system topology language (authority, hierarchy, competence, inter-system r
 
 ## Status
 v0.1 · 4 examples · CI parses every `.lt` block · [`GROUNDING-NOTES.md`](GROUNDING-NOTES.md) · [`docs/model.md`](docs/model.md)
+
+## How this is made
+
+The code and documentation are written with Loomground agents running on Claude (Anthropic). The maintainer reads and corrects all of it.
 
 ## License
 CC-BY-4.0 (spec, README) · Apache-2.0 (grammar, examples) — `LICENSES/`, `NOTICE`.
