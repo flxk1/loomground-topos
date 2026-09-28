@@ -1,0 +1,51 @@
+{
+  "id": "loomground-topos",
+  "namespace": "topos",
+  "describes": "Loomground Topos grammar-level nD system: where a source sits in the structure of legal authority. Grammar-level only; grounded instances (ladders, organs, competences of real legal orders) are policy data loaded from a caller-supplied local path. Jurisdiction is source-level and belongs to the core versum system, not to this plane.",
+  "validation": {
+    "unknown_values": "reject",
+    "missing_coordinates": "preserve_unknown",
+    "provenance_required": true
+  },
+  "bindings": [
+    {"form_slot": "source.position", "axes": ["rank", "level", "organ", "competence", "scope", "reception"]}
+  ],
+  "axes": {
+    "rank": {
+      "value_type": "controlled_identifier",
+      "cardinality": "one",
+      "primitives": ["equal", "precedes", "succeeds"],
+      "vocabulary": {"open": "SPEC.md 7.3: the rank ladder is per-system policy data; the grammar's rank-value is any number or null, so no closed vocabulary is published"}
+    },
+    "level": {
+      "value_type": "controlled_identifier",
+      "cardinality": "one",
+      "primitives": ["equal", "contains", "contained_by"],
+      "vocabulary": {"open": "SPEC.md 7.2: the territorial level ladder is per-system policy data; the grammar admits any id"}
+    },
+    "organ": {
+      "value_type": "controlled_identifier",
+      "cardinality": "one",
+      "primitives": ["equal", "contains", "contained_by"],
+      "vocabulary": {"open": "SPEC.md 2 and 9: a jurisdiction supplies its organs; the grammar admits any id"}
+    },
+    "competence": {
+      "value_type": "controlled_identifier",
+      "cardinality": "many",
+      "primitives": ["equal", "contains", "overlaps", "disjoint"],
+      "vocabulary": {"open": "SPEC.md 7.4: competence domains and their allocation vocabulary are per-system policy data"}
+    },
+    "scope": {
+      "value_type": "controlled_identifier",
+      "cardinality": "many",
+      "primitives": ["equal", "contains", "contained_by", "overlaps", "disjoint"],
+      "vocabulary": {"open": "the grammar publishes no scope vocabulary; subject-matter scope is per-system policy data like competence (SPEC.md 7.4)"}
+    },
+    "reception": {
+      "value_type": "controlled_identifier",
+      "cardinality": "one",
+      "primitives": ["equal"],
+      "vocabulary": {"open": "the grammar publishes no reception vocabulary; reception mode is per-system policy data"}
+    }
+  }
+}

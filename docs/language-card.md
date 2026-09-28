@@ -28,6 +28,8 @@ Values come from [`grammar/topos.ebnf`](../grammar/topos.ebnf) and [`spec/SPEC.m
 | horizontal | `co-equal-with` · `reviews` · `can-veto` · `can-override` · `appoints` · `dissolves` · `may-refer-to` · `must-refer-to` |
 | coupling (endpoints in different systems) | `has-primacy-over` · `applies-directly-in` · `must-be-transposed-by` · `confers-competence` · `has-direct-effect` · `may-refer-to` · `must-refer-to` |
 
+Coupling relations are edges between orders, not reception modes. The grammar publishes no reception vocabulary; reception mode is per-system policy data (the plane's `reception` axis is open, see [`plane.md`](plane.md)).
+
 ## Props
 
 `[key = value, …]` on `rel` and `assert`. Keys: `resolution_mode` = `disapply` \| `invalidate` \| `void` · `state` = `pending` \| `transposed` \| `gap` \| `partial` · `status` = `asserted` \| `contested` · `deadline` = `YYYY-MM-DD` · `basis` = `"text"` · any further `id`.
