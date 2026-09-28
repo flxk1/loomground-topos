@@ -45,7 +45,9 @@ them). It is **consume-only**: downstream consumers read it; none owns it.
 - **Edges** — *vertical* (`outranks`, `derives-authority-from`, `level-contains`,
   `has-primacy-over`), *horizontal check* (`reviews`, `can-veto`, `can-override`,
   `appoints`, `dissolves`, `may`/`must-refer-to`), and *coupling* (the same relations
-  between distinct systems).
+  between distinct systems). Coupling relations are edges, not reception modes: the
+  grammar publishes no reception vocabulary, and a system's reception mode is policy
+  data.
 - **Two vertical axes**, kept separate — the territorial `level_rank` and the normative
   `instrument.rank`.
 - **Powers are a parameter** — the organ-type catalogue is declared per system, never

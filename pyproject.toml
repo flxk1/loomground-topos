@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2026 flxk1
+# SPDX-License-Identifier: Apache-2.0
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loomground-topos"
+dynamic = ["version"]
+description = "Legal-system topology plane: publishes the grammar-level nD system, an empty 5D binding and a pure source-metadata producer as data."
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSES/Apache-2.0.txt", "LICENSES/CC-BY-4.0.txt", "NOTICE"]
+authors = [{ name = "Loomground Contributors" }]
+# Standard-library-only plane (A1: planes are data-only and never import the versum).
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+# Shared plane descriptor contract v1: the versum discovers installed planes here.
+[project.entry-points."loomground.planes"]
+topos = "loomground_topos.plane:plane"
+
+[tool.setuptools]
+# The published grammar and spec stay where they are (grammar/, spec/); they are
+# mapped into the wheel as package data under loomground_topos/published/ so an
+# installed package reads the same artifacts a source checkout reads.
+packages = [
+    "loomground_topos",
+    "loomground_topos.published.grammar",
+    "loomground_topos.published.spec",
+]
+
+[tool.setuptools.package-dir]
+"" = "src"
+"loomground_topos.published.grammar" = "grammar"
+"loomground_topos.published.spec" = "spec"
+
+[tool.setuptools.package-data]
+loomground_topos = ["data/*.json"]
+"loomground_topos.published.grammar" = ["topos.ebnf"]
+"loomground_topos.published.spec" = ["SPEC.md"]
+
+[tool.setuptools.dynamic]
+version = { attr = "loomground_topos._version.__version__" }
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
